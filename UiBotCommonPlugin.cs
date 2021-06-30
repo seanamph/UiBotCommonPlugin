@@ -7,21 +7,21 @@ namespace UiBotCommonPlugin
 {
  public interface Plugin_Interface
  {   //定义一个插件函数时，必须先在这个interface里面声明
-  DateTime GetFileCreationTime(string path);
-  DateTime GetFileLastWriteTime(string path);
+  string GetFileCreationTime(string path);
+  string GetFileLastWriteTime(string path);
   void SmtpSendHtmlMail(string Host, int Port, string Account, string Password, string Subject, string Body, string From, string To, string Cc, string Bcc);
  }
 
  public class Plugin_Implement : Plugin_Interface
  {   //在这里实现插件函数
-  public DateTime GetFileCreationTime(string path)
+  public string GetFileCreationTime(string path)
   {
-   return System.IO.File.GetCreationTime(path);
+   return System.IO.File.GetCreationTime(path).ToString();
   }
 
-  public DateTime GetFileLastWriteTime(string path)
+  public string GetFileLastWriteTime(string path)
   {
-   return System.IO.File.GetLastWriteTime(path);
+   return System.IO.File.GetLastWriteTime(path).ToString();
   }
   public void SmtpSendHtmlMail(string Host, int Port, string Account, string Password, string Subject, string Body, string From, string To, string Cc, string Bcc)
   {
