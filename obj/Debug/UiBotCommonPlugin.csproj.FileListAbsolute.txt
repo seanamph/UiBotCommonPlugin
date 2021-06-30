@@ -1,0 +1,17 @@
+D:\GitHub\jteprpa\UiBotFilePlugin\Debug\UiBotCommonPlugin.dll
+D:\GitHub\jteprpa\UiBotFilePlugin\Debug\UiBotCommonPlugin.pdb
+D:\GitHub\jteprpa\UiBotFilePlugin\Debug\DotNetAdapter.dll
+D:\GitHub\jteprpa\UiBotFilePlugin\Debug\Newtonsoft.Json.dll
+D:\GitHub\jteprpa\UiBotFilePlugin\obj\Debug\UiBotCommonPlugin.csproj.CoreCompileInputs.cache
+D:\GitHub\jteprpa\UiBotFilePlugin\obj\Debug\UiBotCommonPlugin.csproj.CopyComplete
+D:\GitHub\jteprpa\UiBotFilePlugin\obj\Debug\UiBotCommonPlugin.dll
+D:\GitHub\jteprpa\UiBotFilePlugin\obj\Debug\UiBotCommonPlugin.pdb
+D:\GitHub\jteprpa\UiBotFilePlugin\obj\Debug\UiBotCommonPlugin.csprojAssemblyReference.cache
+D:\GitHub\jteprpa\UiBotCommonPlugin\Debug\UiBotCommonPlugin.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Debug\UiBotCommonPlugin.pdb
+D:\GitHub\jteprpa\UiBotCommonPlugin\Debug\DotNetAdapter.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Debug\Newtonsoft.Json.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\obj\Debug\UiBotCommonPlugin.csproj.CoreCompileInputs.cache
+D:\GitHub\jteprpa\UiBotCommonPlugin\obj\Debug\UiBotCommonPlugin.csproj.CopyComplete
+D:\GitHub\jteprpa\UiBotCommonPlugin\obj\Debug\UiBotCommonPlugin.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\obj\Debug\UiBotCommonPlugin.pdb

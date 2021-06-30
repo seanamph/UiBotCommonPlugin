@@ -1,0 +1,8 @@
+D:\GitHub\jteprpa\UiBotFilePlugin\Debug\UiBotFilePlugin.dll
+D:\GitHub\jteprpa\UiBotFilePlugin\Debug\UiBotFilePlugin.pdb
+D:\GitHub\jteprpa\UiBotFilePlugin\Debug\DotNetAdapter.dll
+D:\GitHub\jteprpa\UiBotFilePlugin\Debug\Newtonsoft.Json.dll
+D:\GitHub\jteprpa\UiBotFilePlugin\obj\Debug\UiBotFilePlugin.csproj.CoreCompileInputs.cache
+D:\GitHub\jteprpa\UiBotFilePlugin\obj\Debug\UiBotFilePlugin.csproj.CopyComplete
+D:\GitHub\jteprpa\UiBotFilePlugin\obj\Debug\UiBotFilePlugin.dll
+D:\GitHub\jteprpa\UiBotFilePlugin\obj\Debug\UiBotFilePlugin.pdb
