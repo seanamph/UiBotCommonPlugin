@@ -6,15 +6,16 @@ Uibot 內建函數可能不足，此Plugin 提供可能需要的功能
 
 使用方式：
 
-1 DateTime = UiBotCommonPlugin.GetFileCreationTime(string path)
-查詢檔案建立日期
+1 查詢檔案建立日期
+DateTime = UiBotCommonPlugin.GetFileCreationTime(string path)
 
 
-2 DateTime = UiBotCommonPlugin.GetFileLastWriteTime(string path)
-查詢檔案最後更新日期
 
-3 UiBotCommonPlugin.SmtpSendHtmlMail(string Host, int Port, string Account, string Password, string Subject, string Body, string From, string To, string Cc, string Bcc)
-寄HTML格式的信件
+2 查詢檔案最後更新日期
+DateTime = UiBotCommonPlugin.GetFileLastWriteTime(string path)
 
-2021/6/30 更新 
+
+3 寄HTML格式的信件
+UiBotCommonPlugin.SmtpSendHtmlMail(string Host, int Port, string Account, string Password, string Subject, string Body, string From, string To, string Cc, string Bcc)
+
 
