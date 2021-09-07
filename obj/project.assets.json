@@ -1,0 +1,275 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETFramework,Version=v4.5.2": {
+      "BouncyCastle/1.8.6.1": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
+      "iTextSharp/5.5.13.2": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.6.1"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
+        }
+      },
+      "Spire.PDF/7.6.15": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Spire.License.dll": {},
+          "lib/net40/Spire.Pdf.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Spire.License.dll": {},
+          "lib/net40/Spire.Pdf.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.5.2/win": {
+      "BouncyCastle/1.8.6.1": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
+      "iTextSharp/5.5.13.2": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.6.1"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
+        }
+      },
+      "Spire.PDF/7.6.15": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Spire.License.dll": {},
+          "lib/net40/Spire.Pdf.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Spire.License.dll": {},
+          "lib/net40/Spire.Pdf.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.5.2/win-x64": {
+      "BouncyCastle/1.8.6.1": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
+      "iTextSharp/5.5.13.2": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.6.1"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
+        }
+      },
+      "Spire.PDF/7.6.15": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Spire.License.dll": {},
+          "lib/net40/Spire.Pdf.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Spire.License.dll": {},
+          "lib/net40/Spire.Pdf.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.5.2/win-x86": {
+      "BouncyCastle/1.8.6.1": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
+      "iTextSharp/5.5.13.2": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.6.1"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
+        }
+      },
+      "Spire.PDF/7.6.15": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Spire.License.dll": {},
+          "lib/net40/Spire.Pdf.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Spire.License.dll": {},
+          "lib/net40/Spire.Pdf.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BouncyCastle/1.8.6.1": {
+      "sha512": "rkqpuKmJkdcfTMBkIj1b5nMdBAWKwAyh+I/BQYeqqSD2jkIlhwc9qBNKmSbnpmmm5c29qHZGLpvBSTNWvDLtQA==",
+      "type": "package",
+      "path": "bouncycastle/1.8.6.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "bouncycastle.1.8.6.1.nupkg.sha512",
+        "bouncycastle.nuspec",
+        "lib/BouncyCastle.Crypto.dll"
+      ]
+    },
+    "iTextSharp/5.5.13.2": {
+      "sha512": "8m9oT1nh9F4Z1tzWUey/8lEzZtMGFCDXQY5+8/SSmPgUWAAAWniRo8pimKUZyteNqJr5vtFBxjAhRwLxG7Q0zQ==",
+      "type": "package",
+      "path": "itextsharp/5.5.13.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "gnu-agpl-v3.0.md",
+        "itextsharp.5.5.13.2.nupkg.sha512",
+        "itextsharp.nuspec",
+        "lib/iTextSharp.xml",
+        "lib/itextsharp.dll",
+        "notice.txt"
+      ]
+    },
+    "Spire.PDF/7.6.15": {
+      "sha512": "MW5PQdig8+NIDJGrCG4UgocaLJEmlX1zb+DEMSvHSW9hq1TdFMONtYIvw9Q4G4L+Yg1XoxK7j5HGZo/hVujxAA==",
+      "type": "package",
+      "path": "spire.pdf/7.6.15",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/MonoAndroid/Spire.License.dll",
+        "lib/MonoAndroid/Spire.License.xml",
+        "lib/MonoAndroid/Spire.Pdf.dll",
+        "lib/MonoAndroid/Spire.Pdf.xml",
+        "lib/net20/Spire.License.dll",
+        "lib/net20/Spire.License.xml",
+        "lib/net20/Spire.Pdf.XML",
+        "lib/net20/Spire.Pdf.dll",
+        "lib/net40/Spire.License.dll",
+        "lib/net40/Spire.License.xml",
+        "lib/net40/Spire.Pdf.XML",
+        "lib/net40/Spire.Pdf.dll",
+        "lib/net5.0/Spire.License.dll",
+        "lib/net5.0/Spire.License.xml",
+        "lib/net5.0/Spire.Pdf.dll",
+        "lib/net5.0/Spire.Pdf.xml",
+        "lib/netstandard2.0/Spire.License.dll",
+        "lib/netstandard2.0/Spire.License.xml",
+        "lib/netstandard2.0/Spire.Pdf.dll",
+        "lib/netstandard2.0/Spire.Pdf.xml",
+        "lib/xamarinios/Spire.License.dll",
+        "lib/xamarinios/Spire.License.xml",
+        "lib/xamarinios/Spire.Pdf.dll",
+        "lib/xamarinios/Spire.Pdf.xml",
+        "license.txt",
+        "spire.pdf.7.6.15.nupkg.sha512",
+        "spire.pdf.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETFramework,Version=v4.5.2": [
+      "itextsharp >= 5.5.13.2",
+      "spire.pdf >= 7.6.15"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Sean\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\GitHub\\jteprpa\\UiBotCommonPlugin\\UiBotCommonPlugin.csproj",
+      "projectName": "UiBotCommonPlugin",
+      "projectPath": "D:\\GitHub\\jteprpa\\UiBotCommonPlugin\\UiBotCommonPlugin.csproj",
+      "packagesPath": "C:\\Users\\Sean\\.nuget\\packages\\",
+      "outputPath": "D:\\GitHub\\jteprpa\\UiBotCommonPlugin\\obj\\",
+      "projectStyle": "PackageReference",
+      "skipContentFileWrite": true,
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\Sean\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net452"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net452": {
+          "projectReferences": {}
+        }
+      }
+    },
+    "frameworks": {
+      "net452": {
+        "dependencies": {
+          "itextsharp": {
+            "target": "Package",
+            "version": "[5.5.13.2, )"
+          },
+          "spire.pdf": {
+            "target": "Package",
+            "version": "[7.6.15, )"
+          }
+        }
+      }
+    },
+    "runtimes": {
+      "win": {
+        "#import": []
+      },
+      "win-x64": {
+        "#import": []
+      },
+      "win-x86": {
+        "#import": []
+      }
+    }
+  }
+}

@@ -6,4 +6,8 @@ D:\GitHub\jteprpa\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.csproj.CoreCom
 D:\GitHub\jteprpa\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.csproj.CopyComplete
 D:\GitHub\jteprpa\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.dll
 D:\GitHub\jteprpa\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.pdb
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\BouncyCastle.Crypto.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\itextsharp.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\Spire.License.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\Spire.Pdf.dll
 D:\GitHub\jteprpa\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.csprojAssemblyReference.cache

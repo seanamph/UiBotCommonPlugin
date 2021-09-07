@@ -57,6 +57,14 @@
     <Compile Include="UiBotCommonPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="itextsharp">
+      <Version>5.5.13.2</Version>
+    </PackageReference>
+    <PackageReference Include="spire.pdf">
+      <Version>7.6.15</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

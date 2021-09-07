@@ -1,0 +1,65 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\GitHub\\jteprpa\\UiBotCommonPlugin\\UiBotCommonPlugin.csproj": {}
+  },
+  "projects": {
+    "D:\\GitHub\\jteprpa\\UiBotCommonPlugin\\UiBotCommonPlugin.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\GitHub\\jteprpa\\UiBotCommonPlugin\\UiBotCommonPlugin.csproj",
+        "projectName": "UiBotCommonPlugin",
+        "projectPath": "D:\\GitHub\\jteprpa\\UiBotCommonPlugin\\UiBotCommonPlugin.csproj",
+        "packagesPath": "C:\\Users\\Sean\\.nuget\\packages\\",
+        "outputPath": "D:\\GitHub\\jteprpa\\UiBotCommonPlugin\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Sean\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net452"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net452": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net452": {
+          "dependencies": {
+            "itextsharp": {
+              "target": "Package",
+              "version": "[5.5.13.2, )"
+            },
+            "spire.pdf": {
+              "target": "Package",
+              "version": "[7.6.15, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}
