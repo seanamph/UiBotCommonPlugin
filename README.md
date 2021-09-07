@@ -19,3 +19,14 @@ DateTime = UiBotCommonPlugin.GetFileLastWriteTime(string path)
 UiBotCommonPlugin.SmtpSendHtmlMail(string Host, int Port, string Account, string Password, string Subject, string Body, string From, string To, string Cc, string Bcc)
 
 
+4 把PDF 拆開，每頁一個檔案
+UiBotCommonPlugin.PdfExtractPages(string sourcePDFpath, string outputPDFpath, int startpage, int endpage)
+
+5 把PDF轉成Excel
+UiBotCommonPlugin.PdfToXls(string source, string xlspath)
+
+6 根據文字在PDF內的座標整理出來正確順序的文字內容
+UiBotCommonPlugin.TextFromPage(string _filePath, int startPage, int endPage)
+
+7 調整圖片大小
+UiBotCommonPlugin.(string filepath, int width, int height)

@@ -26,6 +26,7 @@ namespace UiBotCommonPlugin
   string TextFromPage(string _filePath, int startPage, int endPage);
 
   void ThumbnailImage(string filepath, int width, int height);
+  int[] ImageSize(string filepath);
  }
 
  public class Plugin_Implement : Plugin_Interface
@@ -125,6 +126,14 @@ namespace UiBotCommonPlugin
    img1.Save(filepath, filepath.EndsWith(".png", StringComparison.InvariantCultureIgnoreCase) ? ImageFormat.Png : ImageFormat.Jpeg);
   }
 
+
+  public int[] ImageSize(string filepath)
+  {
+   System.Drawing.Image img = System.Drawing.Image.FromFile(filepath);
+   int[] size = new int[] { img.Size.Width, img.Size.Height };
+   img.Dispose();
+   return size;
+  }
   public class TextWithFontExtractionStategy : iTextSharp.text.pdf.parser.ITextExtractionStrategy
   {
    //HTML buffer
