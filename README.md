@@ -29,4 +29,5 @@ UiBotCommonPlugin.PdfToXls(string source, string xlspath)
 UiBotCommonPlugin.TextFromPage(string _filePath, int startPage, int endPage)
 
 7 調整圖片大小
-UiBotCommonPlugin.(string filepath, int width, int height)
+UiBotCommonPlugin.ThumbnailImage(string filepath, int width, int height)
+

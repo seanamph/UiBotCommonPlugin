@@ -24,7 +24,7 @@ namespace UiBotCommonPlugin
   void PdfToXls(string source, string xlspath);
 
   string TextFromPage(string _filePath, int startPage, int endPage);
-
+  void GrayScaleImage(string filepath);
   void ThumbnailImage(string filepath, int width, int height);
   int[] ImageSize(string filepath);
  }
@@ -124,6 +124,47 @@ namespace UiBotCommonPlugin
    img.Dispose();
    stream.Close();
    img1.Save(filepath, filepath.EndsWith(".png", StringComparison.InvariantCultureIgnoreCase) ? ImageFormat.Png : ImageFormat.Jpeg);
+  }
+
+
+  public void GrayScaleImage(string filepath)
+  {
+   MemoryStream stream = new MemoryStream(File.ReadAllBytes(filepath));
+   System.Drawing.Bitmap img = (System.Drawing.Bitmap ) System.Drawing.Image.FromStream(stream);
+   /*
+   Bitmap img1 = new Bitmap(img.Width, img.Height);
+   //get a graphics object from the new image
+   Graphics g = Graphics.FromImage(img);
+   //create the grayscale ColorMatrix
+   ColorMatrix colorMatrix = new ColorMatrix(
+      new float[][]
+     {
+                 new float[] {.3f, .3f, .3f, 0, 0},
+                 new float[] {.59f, .59f, .59f, 0, 0},
+                 new float[] {.11f, .11f, .11f, 0, 0},
+                 new float[] {0, 0, 0, 1, 0},
+                 new float[] {0, 0, 0, 0, 1}
+     });
+   //create some image attributes
+   ImageAttributes attributes = new ImageAttributes();
+   //set the color matrix attribute
+   attributes.SetColorMatrix(colorMatrix);
+   //draw the original image on the new image
+   //using the grayscale color matrix
+   g.DrawImage(img, new System.Drawing.Rectangle(0, 0, img.Width, img.Height),
+      0, 0, img.Width, img.Height, GraphicsUnit.Pixel, attributes);
+   //dispose the Graphics object
+   g.Dispose();
+   */
+   int rgb;
+   Color c;
+   for (int y = 0; y < img.Height; y++)
+    for (int x = 0; x < img.Width; x++)
+    {
+     c = img.GetPixel(x, y);
+     img.SetPixel(x, y, Color.FromArgb(c.R >> 1, c.G >> 1, c.B >> 1));
+    }
+   img.Save(filepath, filepath.EndsWith(".png", StringComparison.InvariantCultureIgnoreCase) ? ImageFormat.Png : ImageFormat.Jpeg);
   }
 
 
