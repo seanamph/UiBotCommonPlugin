@@ -27,10 +27,15 @@ namespace UiBotCommonPlugin
   void GrayScaleImage(string filepath);
   void ThumbnailImage(string filepath, int width, int height);
   int[] ImageSize(string filepath);
+  string UrlEncode(string data);
  }
 
  public class Plugin_Implement : Plugin_Interface
  {   //在这里实现插件函数
+  public string UrlEncode(string data)
+  {
+   return System.Web.HttpUtility.UrlEncode(data, Encoding.UTF8);
+  }
   public string GetFileCreationTime(string path)
   {
    return System.IO.File.GetCreationTime(path).ToString();
