@@ -38,6 +38,14 @@
       "frameworks": {
         "net452": {
           "dependencies": {
+            "NPOI": {
+              "target": "Package",
+              "version": "[2.5.5, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "itextsharp": {
               "target": "Package",
               "version": "[5.5.13.2, )"
