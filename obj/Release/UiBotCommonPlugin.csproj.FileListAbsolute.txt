@@ -10,3 +10,13 @@ D:\GitHub\jteprpa\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.csproj.CoreCom
 D:\GitHub\jteprpa\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.csproj.CopyComplete
 D:\GitHub\jteprpa\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.dll
 D:\GitHub\jteprpa\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.pdb
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\NPOI.OOXML.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\NPOI.OOXML.pdb
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\NPOI.OpenXml4Net.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\NPOI.OpenXml4Net.pdb
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\NPOI.OpenXmlFormats.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\NPOI.OpenXmlFormats.pdb
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\NPOI.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\NPOI.pdb
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\ICSharpCode.SharpZipLib.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\ICSharpCode.SharpZipLib.pdb

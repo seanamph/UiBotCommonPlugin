@@ -64,6 +64,12 @@
     <PackageReference Include="itextsharp">
       <Version>5.5.13.2</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="NPOI">
+      <Version>2.5.5</Version>
+    </PackageReference>
     <PackageReference Include="spire.pdf">
       <Version>7.6.15</Version>
     </PackageReference>
