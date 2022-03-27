@@ -31,9 +31,17 @@ namespace UiBotCommonPlugin
   void ThumbnailImage(string filepath, int width, int height);
   int[] ImageSize(string filepath);
   string UrlEncode(string data);
-  void ArrayToExcel(string json, string target);
+  void ArrayToExcel(string json, string target); 
+
   string testType(string target);
   string ConvertToTraditional(string target);
+
+  string ExcelGetSheetsName(string target);
+  string ExcelReadRow(string target, string SheetName, string range);
+  string ExcelReadColumn(string target, string SheetName, string range);
+  string ExcelGetRowsCount(string target, string SheetName);
+  string ExcelGetColumsCount(string target, string SheetName);
+  string ExcelReadRange(string target, string SheetName, string range);
  }
 
  public class Plugin_Implement : Plugin_Interface
@@ -59,9 +67,53 @@ namespace UiBotCommonPlugin
   }
   public string testType(string json)
   {
-   dynamic response = JsonConvert.DeserializeObject<dynamic>(json);
-   return response.Count.ToString();
+   int[] r = new int[100];
+   for (int i = 0; i < r.Length; i++)
+   {
+    r[i] = i * 1000;
+   }
+   return JsonConvert.SerializeObject(r);
   }
+
+  public string ExcelGetSheetsName(string target)
+  {
+   using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
+   {
+    List<string> t = new List<string>();
+    HSSFWorkbook workbook = new HSSFWorkbook(file);
+    int count = workbook.NumberOfSheets; //獲取所有SheetName
+    for (int i = 0; i < count; i++)
+    {
+     NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(i);
+     if (sheet.LastRowNum > 0)
+     {
+      t.Add(workbook.GetSheetAt(i).SheetName);
+     }
+    }
+    return JsonConvert.SerializeObject(t);
+   }
+  }
+  public string ExcelReadRow(string target, string SheetName, string range)
+  {
+   return "";
+  }
+  public string ExcelReadColumn(string target, string SheetName, string range)
+  {
+   return "";
+  }
+  public string ExcelGetRowsCount(string target, string SheetName)
+  {
+   return "";
+  }
+  public string ExcelGetColumsCount(string target, string SheetName)
+  {
+   return "";
+  }
+  public string ExcelReadRange(string target, string SheetName, string range)
+  {
+   return "";
+  }
+
   public void ArrayToExcel(string json, string target)
   {
 
