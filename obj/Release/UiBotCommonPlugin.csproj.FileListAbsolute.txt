@@ -20,3 +20,4 @@ D:\GitHub\jteprpa\UiBotCommonPlugin\Release\NPOI.dll
 D:\GitHub\jteprpa\UiBotCommonPlugin\Release\NPOI.pdb
 D:\GitHub\jteprpa\UiBotCommonPlugin\Release\ICSharpCode.SharpZipLib.dll
 D:\GitHub\jteprpa\UiBotCommonPlugin\Release\ICSharpCode.SharpZipLib.pdb
+D:\GitHub\jteprpa\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.csproj.AssemblyReference.cache
