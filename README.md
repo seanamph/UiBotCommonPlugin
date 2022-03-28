@@ -40,3 +40,20 @@ UiBotCommonPlugin.ArrayToExcel(string[][] data, string target)
 10 簡體轉繁體
 UiBotCommonPlugin.ConvertToTraditional(string data)
 
+11 Excel 所有工作表
+arrayRet = JSON.Parse(UiBotCommonPlugin.ExcelGetSheetsName("D:\\2203252139.xls"))
+
+12 Excel 讀取區域內容轉成陣列
+arrayRet = JSON.Parse(UiBotCommonPlugin.ExcelReadRange("D:\\2203252139.xls","Sheet1","C5:G9"))
+
+13 Excel 讀取所有內容轉成陣列
+arrayRet = JSON.Parse(UiBotCommonPlugin.ExcelReadToArray("D:\\2203252139.xls","Sheet1"))
+
+14 Excel 讀取欄位數量
+intRet = UiBotCommonPlugin.ExcelGetColumsCount("D:\\2203252139.xls","Sheet1")
+
+15 Excel 讀取筆數
+arrayRet = UiBotCommonPlugin.ExcelGetRowsCount("D:\\2203252139.xls","Sheet1")
+
+16 Excel 讀取某筆內容轉成陣列
+arrayRet = JSON.Parse(UiBotCommonPlugin.ExcelReadRow("D:\\2203252139.xls","Sheet1",0))

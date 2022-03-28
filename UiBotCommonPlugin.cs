@@ -79,25 +79,38 @@ namespace UiBotCommonPlugin
 
   public string ExcelGetSheetsName(string target)
   {
-   using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
+   try
    {
-    List<string> t = new List<string>();
-    HSSFWorkbook workbook = new HSSFWorkbook(file);
-    int count = workbook.NumberOfSheets; //獲取所有SheetName
-    for (int i = 0; i < count; i++)
+    using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
     {
-     NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(i);
-     if (sheet.LastRowNum > 0)
+     List<string> t = new List<string>();
+     HSSFWorkbook workbook = new HSSFWorkbook(file);
+     int count = workbook.NumberOfSheets; //獲取所有SheetName
+     for (int i = 0; i < count; i++)
      {
-      t.Add(workbook.GetSheetAt(i).SheetName);
+      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(i);
+      if (sheet.LastRowNum > 0)
+      {
+       t.Add(workbook.GetSheetAt(i).SheetName);
+      }
      }
+     return JsonConvert.SerializeObject(t);
     }
-    return JsonConvert.SerializeObject(t);
+   }
+   catch (Exception ex)
+   {
+    return JsonConvert.SerializeObject(new
+    {
+     error = ex.Message
+    });
    }
   }
+
   public string ExcelReadRow(string target, string SheetName, int RowNumber)
   {
-   List<object> t = new List<object>();
+   try
+   {
+    List<object> t = new List<object>();
    using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
    {
     HSSFWorkbook workbook = new HSSFWorkbook(file);
@@ -112,10 +125,16 @@ namespace UiBotCommonPlugin
 
    }
    return JsonConvert.SerializeObject(t);
+   }
+   catch (Exception ex)
+   {
+    return JsonConvert.SerializeObject(new { error = ex.Message });
+   }
   }
 
  private object getCellValue(NPOI.SS.UserModel.ICell cell)
  {
+   if(cell == null) return null;
   object cValue = string.Empty;
   switch (cell.CellType)
   {
@@ -142,74 +161,100 @@ namespace UiBotCommonPlugin
  }
   public int ExcelGetRowsCount(string target, string SheetName)
   {
-   using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
+   try
    {
-    HSSFWorkbook workbook = new HSSFWorkbook(file);
+    using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
+    {
+     HSSFWorkbook workbook = new HSSFWorkbook(file);
 
-    NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
-    return sheet.LastRowNum + 1;
+     NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
+     return sheet.LastRowNum + 1;
 
+    }
+   }
+   catch (Exception ex)
+   {
+    return -1;
    }
   }
   public int ExcelGetColumsCount(string target, string SheetName)
   {
-   using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
+   try
    {
-    HSSFWorkbook workbook = new HSSFWorkbook(file);
-    NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
-    NPOI.SS.UserModel.IRow Row = sheet.GetRow(0);
-    return Row.LastCellNum;
-   }
-  }
-  public string ExcelReadToArray(string target, string SheetName)
-  {
-   List< List<object>> t = new List<List<object>>();
-   using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
-   {
-    HSSFWorkbook workbook = new HSSFWorkbook(file);
-    NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
-    NPOI.SS.UserModel.IRow Row = sheet.GetRow(0);
-    int columnCount = Row.LastCellNum;
-    int rowCount = sheet.LastRowNum + 1;
-
-    for (int i = (sheet.FirstRowNum + 1); i < rowCount; i++)
+    using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
     {
-     Row = sheet.GetRow(i);
-     List<object> r = new List<object>();
-     for (int j = Row.FirstCellNum; j < Row.LastCellNum; j++)
-     {
-      r.Add(getCellValue(Row.GetCell(i)));
-     }
-     t.Add(r);
+     HSSFWorkbook workbook = new HSSFWorkbook(file);
+     NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
+     NPOI.SS.UserModel.IRow Row = sheet.GetRow(0);
+     return Row.LastCellNum;
     }
    }
-   return JsonConvert.SerializeObject(t);
+   catch (Exception ex)
+   {
+    return -1;
+   }
+  }
+
+  public string ExcelReadToArray(string target, string SheetName)
+  {
+   try
+   {
+    List<List<object>> t = new List<List<object>>();
+    using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
+    {
+     HSSFWorkbook workbook = new HSSFWorkbook(file);
+     NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
+     for (int i = 0; i < sheet.LastRowNum + 1; i++)
+     {
+      NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
+      List<object> r = new List<object>();
+      for (int j = 0; j < Row.LastCellNum + 1; j++)
+      {
+       r.Add(getCellValue(Row.GetCell(j)));
+      }
+      t.Add(r);
+     }
+    }
+    return JsonConvert.SerializeObject(t);
+   }
+   catch (Exception ex)
+   {
+    return JsonConvert.SerializeObject(new { error = ex.Message });
+   }
   }
 
   public string ExcelReadRange(string target, string SheetName, string range)
   {
-   List<List<object>> t = new List<List<object>>();
-   using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
+   try
    {
-    HSSFWorkbook workbook = new HSSFWorkbook(file);
-    NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
-
-    var cellRange = NPOI.SS.Util.CellRangeAddress.ValueOf(range);
-
-
-    for (int i = (cellRange.FirstRow + 1); i < cellRange.LastRow; i++)
+    List<List<object>> t = new List<List<object>>();
+    using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
     {
-     NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
-     List<object> r = new List<object>();
-     for (int j = Row.FirstCellNum; j < Row.LastCellNum; j++)
+     HSSFWorkbook workbook = new HSSFWorkbook(file);
+     NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
+
+     var cellRange = NPOI.SS.Util.CellRangeAddress.ValueOf(range);
+
+
+     for (int i = cellRange.FirstRow; i <= cellRange.LastRow; i++)
      {
-      r.Add(getCellValue(Row.GetCell(i)));
+      NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
+      List<object> r = new List<object>();
+      for (int j = cellRange.FirstColumn; j <= cellRange.LastColumn; j++)
+      {
+       r.Add(getCellValue(Row.GetCell(j)));
+      }
+      t.Add(r);
      }
-     t.Add(r);
     }
+    return JsonConvert.SerializeObject(t);
    }
-   return JsonConvert.SerializeObject(t);
+   catch (Exception ex)
+   {
+    return JsonConvert.SerializeObject(new { error = ex.Message });
+   }
   }
+
   public void ArrayToExcel(string json, string target)
   {
 
