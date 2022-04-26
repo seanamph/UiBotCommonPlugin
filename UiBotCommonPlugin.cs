@@ -32,7 +32,7 @@ namespace UiBotCommonPlugin
   void ThumbnailImage(string filepath, int width, int height);
   int[] ImageSize(string filepath);
   string UrlEncode(string data);
-  void ArrayToExcel(string json, string target); 
+  void ArrayToExcel(string json, string target, string sheetName); 
 
   string testType(string target);
   string ConvertToTraditional(string target);
@@ -233,7 +233,6 @@ namespace UiBotCommonPlugin
     {
      HSSFWorkbook workbook = new HSSFWorkbook(file);
      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
-
      var cellRange = NPOI.SS.Util.CellRangeAddress.ValueOf(range);
 
 
@@ -293,7 +292,7 @@ namespace UiBotCommonPlugin
    }
   }
 
-  public void ArrayToExcel(string json, string target)
+  public void ArrayToExcel(string json, string target, string sheetName)
   {
 
    dynamic dv = JsonConvert.DeserializeObject<dynamic>(json);
@@ -306,8 +305,17 @@ namespace UiBotCommonPlugin
    ft.FontName = "新細明體";
    ft.FontHeightInPoints = 12;
    style.SetFont(ft);
-   HSSFSheet sheet = workbook.CreateSheet("總覽") as HSSFSheet;
-
+   HSSFSheet sheet = null;
+   int count = workbook.NumberOfSheets; //獲取所有SheetName
+   for (int i = 0; i < count; i++)
+   {
+    if (workbook.GetSheetAt(i).SheetName == sheetName)
+    {
+     sheet = workbook.GetSheetAt(i) as HSSFSheet;
+     break;
+    }
+   }
+   if(sheet == null) sheet = workbook.CreateSheet(sheetName) as HSSFSheet;
    for (int r = 0; r < dv.Count; r++)
    {
     for (int i = 0; i < dv[r].Count; i++)
