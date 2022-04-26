@@ -42,6 +42,7 @@ namespace UiBotCommonPlugin
   int ExcelGetRowsCount(string target, string SheetName);
   int ExcelGetColumsCount(string target, string SheetName);
   string ExcelReadToArray(string target, string SheetName);
+  string ExcelReadAllData(string target);
 
   string ExcelReadRange(string target, string SheetName, string range);
  }
@@ -248,6 +249,43 @@ namespace UiBotCommonPlugin
      }
     }
     return JsonConvert.SerializeObject(t);
+   }
+   catch (Exception ex)
+   {
+    return JsonConvert.SerializeObject(new { error = ex.Message });
+   }
+  }
+
+  public string ExcelReadAllData(string target)
+  {
+   try
+   {
+    using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
+    {
+
+     HSSFWorkbook workbook = new HSSFWorkbook(file);
+
+     Dictionary<string, List<List<object>>> d = new Dictionary<string, List<List<object>>>();
+     int count = workbook.NumberOfSheets; //獲取所有SheetName
+     for (int s = 0; s < count; s++)
+     {
+      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(s);
+      string SheetName = workbook.GetSheetAt(s).SheetName;
+      List<List<object>> t = new List<List<object>>();
+      for (int i = 0; i < sheet.LastRowNum + 1; i++)
+      {
+       NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
+       List<object> r = new List<object>();
+       for (int j = 0; j < Row.LastCellNum + 1; j++)
+       {
+        r.Add(getCellValue(Row.GetCell(j)));
+       }
+       t.Add(r);
+      }
+      d[SheetName] = t;
+     }
+     return JsonConvert.SerializeObject(d);
+    }
    }
    catch (Exception ex)
    {
