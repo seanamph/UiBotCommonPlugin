@@ -22,7 +22,7 @@ namespace UiBotCommonPlugin
  {   //定义一个插件函数时，必须先在这个interface里面声明
   string GetFileCreationTime(string path);
   string GetFileLastWriteTime(string path);
-  void SmtpSendHtmlMail(string Host, int Port, string Account, string Password, string Subject, string Body, string From, string To, string Cc, string Bcc);
+  void SmtpSendHtmlMail(string Host, int Port, string Account, string Password, string Subject, string Body, string From, string To, string Cc, string Bcc, string file);
 
   void PdfExtractPages(string sourcePDFpath, string outputPDFpath, int startpage, int endpage);
   void PdfToXls(string source, string xlspath);
@@ -348,7 +348,7 @@ namespace UiBotCommonPlugin
   {
    return System.IO.File.GetLastWriteTime(path).ToString();
   }
-  public void SmtpSendHtmlMail(string Host, int Port, string Account, string Password, string Subject, string Body, string From, string To, string Cc, string Bcc)
+  public void SmtpSendHtmlMail(string Host, int Port, string Account, string Password, string Subject, string Body, string From, string To, string Cc, string Bcc, string file)
   {
    try
    {
@@ -362,7 +362,8 @@ namespace UiBotCommonPlugin
     msg.Body = Body;
     msg.To.Add("sean@everbiz.com.tw");
     msg.From = new System.Net.Mail.MailAddress(From);
-
+    if (!string.IsNullOrEmpty(file))
+     msg.Attachments.Add(new System.Net.Mail.Attachment(file));
     foreach (Match item in new Regex(@"[\w-\.]+@([\w-]+\.)+[\w-]{2,4}", RegexOptions.IgnoreCase).Matches(To)) msg.To.Add(item.Value);
     if (Cc != null)
      foreach (Match item in new Regex(@"[\w-\.]+@([\w-]+\.)+[\w-]{2,4}", RegexOptions.IgnoreCase).Matches(Cc)) msg.CC.Add(item.Value);
