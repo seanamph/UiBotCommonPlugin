@@ -22,7 +22,7 @@ namespace UiBotCommonPlugin
  {   //定义一个插件函数时，必须先在这个interface里面声明
   string GetFileCreationTime(string path);
   string GetFileLastWriteTime(string path);
-  void SmtpSendHtmlMail(string Host, int Port, string Account, string Password, string Subject, string Body, string From, string To, string Cc, string Bcc);
+  void SmtpSendHtmlMail(string Host, int Port, string Account, string Password, string Subject, string Body, string From, string To, string Cc, string Bcc, string file);
 
   void PdfExtractPages(string sourcePDFpath, string outputPDFpath, int startpage, int endpage);
   void PdfToXls(string source, string xlspath);
@@ -32,7 +32,7 @@ namespace UiBotCommonPlugin
   void ThumbnailImage(string filepath, int width, int height);
   int[] ImageSize(string filepath);
   string UrlEncode(string data);
-  void ArrayToExcel(string json, string target); 
+  void ArrayToExcel(string json, string target, string sheetName); 
 
   string testType(string target);
   string ConvertToTraditional(string target);
@@ -42,6 +42,7 @@ namespace UiBotCommonPlugin
   int ExcelGetRowsCount(string target, string SheetName);
   int ExcelGetColumsCount(string target, string SheetName);
   string ExcelReadToArray(string target, string SheetName);
+  string ExcelReadAllData(string target);
 
   string ExcelReadRange(string target, string SheetName, string range);
  }
@@ -232,7 +233,6 @@ namespace UiBotCommonPlugin
     {
      HSSFWorkbook workbook = new HSSFWorkbook(file);
      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
-
      var cellRange = NPOI.SS.Util.CellRangeAddress.ValueOf(range);
 
 
@@ -255,7 +255,44 @@ namespace UiBotCommonPlugin
    }
   }
 
-  public void ArrayToExcel(string json, string target)
+  public string ExcelReadAllData(string target)
+  {
+   try
+   {
+    using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
+    {
+
+     HSSFWorkbook workbook = new HSSFWorkbook(file);
+
+     Dictionary<string, List<List<object>>> d = new Dictionary<string, List<List<object>>>();
+     int count = workbook.NumberOfSheets; //獲取所有SheetName
+     for (int s = 0; s < count; s++)
+     {
+      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(s);
+      string SheetName = workbook.GetSheetAt(s).SheetName;
+      List<List<object>> t = new List<List<object>>();
+      for (int i = 0; i < sheet.LastRowNum + 1; i++)
+      {
+       NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
+       List<object> r = new List<object>();
+       for (int j = 0; j < Row.LastCellNum + 1; j++)
+       {
+        r.Add(getCellValue(Row.GetCell(j)));
+       }
+       t.Add(r);
+      }
+      d[SheetName] = t;
+     }
+     return JsonConvert.SerializeObject(d);
+    }
+   }
+   catch (Exception ex)
+   {
+    return JsonConvert.SerializeObject(new { error = ex.Message });
+   }
+  }
+
+  public void ArrayToExcel(string json, string target, string sheetName)
   {
 
    dynamic dv = JsonConvert.DeserializeObject<dynamic>(json);
@@ -268,8 +305,17 @@ namespace UiBotCommonPlugin
    ft.FontName = "新細明體";
    ft.FontHeightInPoints = 12;
    style.SetFont(ft);
-   HSSFSheet sheet = workbook.CreateSheet("總覽") as HSSFSheet;
-
+   HSSFSheet sheet = null;
+   int count = workbook.NumberOfSheets; //獲取所有SheetName
+   for (int i = 0; i < count; i++)
+   {
+    if (workbook.GetSheetAt(i).SheetName == sheetName)
+    {
+     sheet = workbook.GetSheetAt(i) as HSSFSheet;
+     break;
+    }
+   }
+   if(sheet == null) sheet = workbook.CreateSheet(sheetName) as HSSFSheet;
    for (int r = 0; r < dv.Count; r++)
    {
     for (int i = 0; i < dv[r].Count; i++)
@@ -302,7 +348,7 @@ namespace UiBotCommonPlugin
   {
    return System.IO.File.GetLastWriteTime(path).ToString();
   }
-  public void SmtpSendHtmlMail(string Host, int Port, string Account, string Password, string Subject, string Body, string From, string To, string Cc, string Bcc)
+  public void SmtpSendHtmlMail(string Host, int Port, string Account, string Password, string Subject, string Body, string From, string To, string Cc, string Bcc, string file)
   {
    try
    {
@@ -316,7 +362,8 @@ namespace UiBotCommonPlugin
     msg.Body = Body;
     msg.To.Add("sean@everbiz.com.tw");
     msg.From = new System.Net.Mail.MailAddress(From);
-
+    if (!string.IsNullOrEmpty(file))
+     msg.Attachments.Add(new System.Net.Mail.Attachment(file));
     foreach (Match item in new Regex(@"[\w-\.]+@([\w-]+\.)+[\w-]{2,4}", RegexOptions.IgnoreCase).Matches(To)) msg.To.Add(item.Value);
     if (Cc != null)
      foreach (Match item in new Regex(@"[\w-\.]+@([\w-]+\.)+[\w-]{2,4}", RegexOptions.IgnoreCase).Matches(Cc)) msg.CC.Add(item.Value);
