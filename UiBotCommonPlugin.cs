@@ -14,6 +14,7 @@ using NPOI.HSSF.UserModel;
 using Newtonsoft;
 using Newtonsoft.Json;
 using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 
 //建议把下面的namespace名字改为您的插件名字
 namespace UiBotCommonPlugin
@@ -85,17 +86,34 @@ namespace UiBotCommonPlugin
     using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
     {
      List<string> t = new List<string>();
-     HSSFWorkbook workbook = new HSSFWorkbook(file);
-     int count = workbook.NumberOfSheets; //獲取所有SheetName
-     for (int i = 0; i < count; i++)
+     if (target.EndsWith(".xls", StringComparison.InvariantCultureIgnoreCase))
      {
-      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(i);
-      if (sheet.LastRowNum > 0)
+      HSSFWorkbook workbook = new HSSFWorkbook(file);
+      int count = workbook.NumberOfSheets; //獲取所有SheetName
+      for (int i = 0; i < count; i++)
       {
-       t.Add(workbook.GetSheetAt(i).SheetName);
+       NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(i);
+       if (sheet.LastRowNum > 0)
+       {
+        t.Add(workbook.GetSheetAt(i).SheetName);
+       }
       }
+      return JsonConvert.SerializeObject(t);
      }
-     return JsonConvert.SerializeObject(t);
+     else
+     {
+      XSSFWorkbook workbook = new XSSFWorkbook(file);
+      int count = workbook.NumberOfSheets; //獲取所有SheetName
+      for (int i = 0; i < count; i++)
+      {
+       NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(i);
+       if (sheet.LastRowNum > 0)
+       {
+        t.Add(workbook.GetSheetAt(i).SheetName);
+       }
+      }
+      return JsonConvert.SerializeObject(t);
+     }
     }
    }
    catch (Exception ex)
@@ -112,20 +130,37 @@ namespace UiBotCommonPlugin
    try
    {
     List<object> t = new List<object>();
-   using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
-   {
-    HSSFWorkbook workbook = new HSSFWorkbook(file);
-
-    NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
-    NPOI.SS.UserModel.IRow Row = sheet.GetRow(RowNumber);
-    int cellCount = Row.LastCellNum;
-    for (int i = Row.FirstCellNum; i < Row.LastCellNum; i++)
+    using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
     {
-     t.Add(getCellValue(Row.GetCell(i)));
-    }
+     if (target.EndsWith(".xls", StringComparison.InvariantCultureIgnoreCase))
+     {
+      HSSFWorkbook workbook = new HSSFWorkbook(file);
 
-   }
-   return JsonConvert.SerializeObject(t);
+      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
+      NPOI.SS.UserModel.IRow Row = sheet.GetRow(RowNumber);
+      int cellCount = Row.LastCellNum;
+      for (int i = Row.FirstCellNum; i < Row.LastCellNum; i++)
+      {
+       t.Add(getCellValue(Row.GetCell(i)));
+      }
+      return JsonConvert.SerializeObject(t);
+
+     }
+     else
+     {
+
+      XSSFWorkbook workbook = new XSSFWorkbook(file);
+
+      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
+      NPOI.SS.UserModel.IRow Row = sheet.GetRow(RowNumber);
+      int cellCount = Row.LastCellNum;
+      for (int i = Row.FirstCellNum; i < Row.LastCellNum; i++)
+      {
+       t.Add(getCellValue(Row.GetCell(i)));
+      }
+      return JsonConvert.SerializeObject(t);
+     }
+    }
    }
    catch (Exception ex)
    {
@@ -166,10 +201,21 @@ namespace UiBotCommonPlugin
    {
     using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
     {
-     HSSFWorkbook workbook = new HSSFWorkbook(file);
+     if (target.EndsWith(".xls", StringComparison.InvariantCultureIgnoreCase))
+     {
+      HSSFWorkbook workbook = new HSSFWorkbook(file);
 
-     NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
-     return sheet.LastRowNum + 1;
+      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
+      return sheet.LastRowNum + 1;
+     }
+     else
+     {
+
+      XSSFWorkbook workbook = new XSSFWorkbook(file);
+
+      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
+      return sheet.LastRowNum + 1;
+     }
 
     }
    }
@@ -184,10 +230,20 @@ namespace UiBotCommonPlugin
    {
     using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
     {
-     HSSFWorkbook workbook = new HSSFWorkbook(file);
-     NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
-     NPOI.SS.UserModel.IRow Row = sheet.GetRow(0);
-     return Row.LastCellNum;
+     if (target.EndsWith(".xls", StringComparison.InvariantCultureIgnoreCase))
+     {
+      HSSFWorkbook workbook = new HSSFWorkbook(file);
+      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
+      NPOI.SS.UserModel.IRow Row = sheet.GetRow(0);
+      return Row.LastCellNum;
+     }
+     else
+     {
+      XSSFWorkbook workbook = new XSSFWorkbook(file);
+      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
+      NPOI.SS.UserModel.IRow Row = sheet.GetRow(0);
+      return Row.LastCellNum;
+     }
     }
    }
    catch (Exception ex)
@@ -203,20 +259,39 @@ namespace UiBotCommonPlugin
     List<List<object>> t = new List<List<object>>();
     using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
     {
-     HSSFWorkbook workbook = new HSSFWorkbook(file);
-     NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
-     for (int i = 0; i < sheet.LastRowNum + 1; i++)
+     if (target.EndsWith(".xls", StringComparison.InvariantCultureIgnoreCase))
      {
-      NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
-      List<object> r = new List<object>();
-      for (int j = 0; j < Row.LastCellNum + 1; j++)
+      HSSFWorkbook workbook = new HSSFWorkbook(file);
+      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
+      for (int i = 0; i < sheet.LastRowNum + 1; i++)
       {
-       r.Add(getCellValue(Row.GetCell(j)));
+       NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
+       List<object> r = new List<object>();
+       for (int j = 0; j < Row.LastCellNum + 1; j++)
+       {
+        r.Add(getCellValue(Row.GetCell(j)));
+       }
+       t.Add(r);
       }
-      t.Add(r);
+      return JsonConvert.SerializeObject(t);
+     }
+     else
+     {
+      XSSFWorkbook workbook = new XSSFWorkbook(file);
+      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
+      for (int i = 0; i < sheet.LastRowNum + 1; i++)
+      {
+       NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
+       List<object> r = new List<object>();
+       for (int j = 0; j < Row.LastCellNum + 1; j++)
+       {
+        r.Add(getCellValue(Row.GetCell(j)));
+       }
+       t.Add(r);
+      }
+      return JsonConvert.SerializeObject(t);
      }
     }
-    return JsonConvert.SerializeObject(t);
    }
    catch (Exception ex)
    {
@@ -231,23 +306,48 @@ namespace UiBotCommonPlugin
     List<List<object>> t = new List<List<object>>();
     using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
     {
-     HSSFWorkbook workbook = new HSSFWorkbook(file);
-     NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
-     var cellRange = NPOI.SS.Util.CellRangeAddress.ValueOf(range);
-
-
-     for (int i = cellRange.FirstRow; i <= cellRange.LastRow; i++)
+     if (target.EndsWith(".xls", StringComparison.InvariantCultureIgnoreCase))
      {
-      NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
-      List<object> r = new List<object>();
-      for (int j = cellRange.FirstColumn; j <= cellRange.LastColumn; j++)
+      HSSFWorkbook workbook = new HSSFWorkbook(file);
+      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
+      var cellRange = NPOI.SS.Util.CellRangeAddress.ValueOf(range);
+
+
+      for (int i = cellRange.FirstRow; i <= cellRange.LastRow; i++)
       {
-       r.Add(getCellValue(Row.GetCell(j)));
+       NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
+       List<object> r = new List<object>();
+       for (int j = cellRange.FirstColumn; j <= cellRange.LastColumn; j++)
+       {
+        r.Add(getCellValue(Row.GetCell(j)));
+       }
+       t.Add(r);
       }
-      t.Add(r);
+
+      return JsonConvert.SerializeObject(t);
+     }
+     else
+     {
+      XSSFWorkbook workbook = new XSSFWorkbook(file);
+      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheet(SheetName);
+      var cellRange = NPOI.SS.Util.CellRangeAddress.ValueOf(range);
+
+
+      for (int i = cellRange.FirstRow; i <= cellRange.LastRow; i++)
+      {
+       NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
+       List<object> r = new List<object>();
+       for (int j = cellRange.FirstColumn; j <= cellRange.LastColumn; j++)
+       {
+        r.Add(getCellValue(Row.GetCell(j)));
+       }
+       t.Add(r);
+      }
+
+      return JsonConvert.SerializeObject(t);
+
      }
     }
-    return JsonConvert.SerializeObject(t);
    }
    catch (Exception ex)
    {
@@ -262,28 +362,57 @@ namespace UiBotCommonPlugin
     using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
     {
 
-     HSSFWorkbook workbook = new HSSFWorkbook(file);
-
-     Dictionary<string, List<List<object>>> d = new Dictionary<string, List<List<object>>>();
-     int count = workbook.NumberOfSheets; //獲取所有SheetName
-     for (int s = 0; s < count; s++)
+     if (target.EndsWith(".xls", StringComparison.InvariantCultureIgnoreCase))
      {
-      NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(s);
-      string SheetName = workbook.GetSheetAt(s).SheetName;
-      List<List<object>> t = new List<List<object>>();
-      for (int i = 0; i < sheet.LastRowNum + 1; i++)
+      HSSFWorkbook workbook = new HSSFWorkbook(file);
+
+      Dictionary<string, List<List<object>>> d = new Dictionary<string, List<List<object>>>();
+      int count = workbook.NumberOfSheets; //獲取所有SheetName
+      for (int s = 0; s < count; s++)
       {
-       NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
-       List<object> r = new List<object>();
-       for (int j = 0; j < Row.LastCellNum + 1; j++)
+       NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(s);
+       string SheetName = workbook.GetSheetAt(s).SheetName;
+       List<List<object>> t = new List<List<object>>();
+       for (int i = 0; i < sheet.LastRowNum + 1; i++)
        {
-        r.Add(getCellValue(Row.GetCell(j)));
+        NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
+        List<object> r = new List<object>();
+        for (int j = 0; j < Row.LastCellNum + 1; j++)
+        {
+         r.Add(getCellValue(Row.GetCell(j)));
+        }
+        t.Add(r);
        }
-       t.Add(r);
+       d[SheetName] = t;
       }
-      d[SheetName] = t;
+      return JsonConvert.SerializeObject(d);
      }
-     return JsonConvert.SerializeObject(d);
+     else
+     {
+
+      XSSFWorkbook workbook = new XSSFWorkbook(file);
+
+      Dictionary<string, List<List<object>>> d = new Dictionary<string, List<List<object>>>();
+      int count = workbook.NumberOfSheets; //獲取所有SheetName
+      for (int s = 0; s < count; s++)
+      {
+       NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(s);
+       string SheetName = workbook.GetSheetAt(s).SheetName;
+       List<List<object>> t = new List<List<object>>();
+       for (int i = 0; i < sheet.LastRowNum + 1; i++)
+       {
+        NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
+        List<object> r = new List<object>();
+        for (int j = 0; j < Row.LastCellNum + 1; j++)
+        {
+         r.Add(getCellValue(Row.GetCell(j)));
+        }
+        t.Add(r);
+       }
+       d[SheetName] = t;
+      }
+      return JsonConvert.SerializeObject(d);
+     }
     }
    }
    catch (Exception ex)
