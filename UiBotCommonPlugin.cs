@@ -491,7 +491,6 @@ namespace UiBotCommonPlugin
     System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
     msg.IsBodyHtml = true;
     msg.Body = Body;
-    msg.To.Add("sean@everbiz.com.tw");
     msg.From = new System.Net.Mail.MailAddress(From);
     if (!string.IsNullOrEmpty(file))
      msg.Attachments.Add(new System.Net.Mail.Attachment(file));
