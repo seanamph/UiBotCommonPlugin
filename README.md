@@ -16,7 +16,24 @@ DateTime = UiBotCommonPlugin.GetFileLastWriteTime(string path)
 
 
 3 寄HTML格式的信件
-UiBotCommonPlugin.SmtpSendHtmlMail(string Host, int Port, string Account, string Password, string Subject, string Body, string From, string To, string Cc, string Bcc)
+UiBotCommonPlugin.SmtpSendHtmlMail(string Host, int Port, string Account, string Password, string Subject, string Body, string From, string To, string Cc, string Bcc, string file)
+
+Host 寄信IP
+Port 寄信Port
+Account 寄信帳號
+Password 寄信密碼
+Subject 信件主旨
+Body 信件內容
+Form 寄信者
+To 收信者
+CC 副本收信者
+Bcc 密件副本收信者
+file 附加檔案
+
+範例:
+
+	UiBotCommonPlugin.SmtpSendHtmlMail("mailserver.com",587,"account","password","RPA test", "test123","sean@everbiz.com.tw","sean@everbiz.com.tw;test@everbiz.com.tw","","","D:\\1.pdf")
+	
 
 
 4 把PDF 拆開，每頁一個檔案
