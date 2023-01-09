@@ -47,6 +47,9 @@ namespace UiBotCommonPlugin
   string ExcelReadAllData(string target);
 
   string ExcelReadRange(string target, string SheetName, string range);
+  string OCR(string target, string domain, string key);
+
+  
  }
 
  public class Plugin_Implement : Plugin_Interface
@@ -462,7 +465,44 @@ namespace UiBotCommonPlugin
    stream.Close();
   }
 
-   
+
+  public string OCR(string target, string domain, string apikey) {
+
+   try
+   {
+    if(File.Exists(target))
+    {
+     try
+     {
+      using (System.Drawing.Image img = System.Drawing.Image.FromFile(target))
+      {
+       using (MemoryStream stream = new MemoryStream())
+       {
+        img.Save(stream, ImageFormat.Jpeg);
+        using(WebClient client = new WebClient())
+        {
+         string base64Data = UrlEncode( "data:image/jpeg;base64," + Convert.ToBase64String(stream.ToArray()));
+         client.Headers["key"] = apikey;
+         client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
+         client.Encoding  = Encoding.UTF8;
+         return client.UploadString("https://iot.jtmes.net/" + domain + "/api/ocr" , "POST", "base64Data=" + base64Data);
+        }
+       }
+      }
+     }
+     catch (Exception e)
+     {
+
+      return JsonConvert.SerializeObject(new { error = "Bad Image", msg = e.Message });
+     }
+    }
+    return JsonConvert.SerializeObject(new { error = "File Not Found"});
+   }
+   catch (Exception ex)
+   {
+    return JsonConvert.SerializeObject(new { error = ex.Message });
+   }
+  }
 
   public string UrlEncode(string data)
   {
@@ -738,6 +778,7 @@ namespace UiBotCommonPlugin
    public void BeginTextBlock() { }
    public void EndTextBlock() { }
    public void RenderImage(ImageRenderInfo renderInfo) { }
+
   }
  }
 
