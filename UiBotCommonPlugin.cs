@@ -16,6 +16,11 @@ using Newtonsoft.Json;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System.Net;
+using NPOI.POIFS.FileSystem;
+using NPOI.Util;
+using NPOI.HSSF.Record;
+using NPOI.HSSF.Model;
+using System.Reflection;
 
 //建议把下面的namespace名字改为您的插件名字
 namespace UiBotCommonPlugin
@@ -28,6 +33,9 @@ namespace UiBotCommonPlugin
 
   void PdfExtractPages(string sourcePDFpath, string outputPDFpath, int startpage, int endpage);
   void PdfToXls(string source, string xlspath);
+  void DocToDocx(string source, string xlspath);
+  void PptToPptx(string source, string xlspath);
+  void XlsToXlsx(string source, string xlspath);
 
   string TextFromPage(string _filePath, int startPage, int endPage);
   void GrayScaleImage(string filepath);
@@ -38,6 +46,8 @@ namespace UiBotCommonPlugin
 
   string testType(string target);
   string ConvertToTraditional(string target);
+
+  string ExcelReset(string target);
 
   string ExcelGetSheetsName(string target);
   string ExcelReadRow(string target, string SheetName, int RowNumber);
@@ -358,6 +368,30 @@ namespace UiBotCommonPlugin
    }
   }
 
+
+  public string ExcelReset(string target)
+  {
+   using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
+   {
+
+    if (target.EndsWith(".xls", StringComparison.InvariantCultureIgnoreCase))
+    {
+     HSSFWorkbook workbook = new HSSFWorkbook(file);
+
+     workbook.Close();
+    }else
+    {
+
+     XSSFWorkbook workbook = new XSSFWorkbook(file);
+     workbook.Close();
+    }
+     //now the workbook is created properly
+     return "OK";
+   }
+
+
+  }
+
   public string ExcelReadAllData(string target)
   {
    try
@@ -574,6 +608,29 @@ namespace UiBotCommonPlugin
    Spire.Pdf.PdfDocument doc = new Spire.Pdf.PdfDocument(filename);
    doc.SaveToFile(xlspath, Spire.Pdf.FileFormat.XLSX);
   }
+
+
+  public void DocToDocx(string filename, string xlspath)
+  {
+   Aspose.Words.Document wordDocument = new Aspose.Words.Document(filename);
+   wordDocument.Save(xlspath, Aspose.Words.SaveFormat.Docx);
+  }
+
+  public void PptToPptx(string filename, string xlspath)
+  {
+   // Instantiate a Presentation object that represents a PPTX file
+   Aspose.Slides.Presentation pres = new Aspose.Slides.Presentation(filename);
+
+   // Saving the PPTX presentation to PPTX format
+   pres.Save(xlspath, Aspose.Slides.Export.SaveFormat.Pptx);
+  }
+
+  public void XlsToXlsx(string filename, string xlspath)
+  {
+   var workbook = new Aspose.Cells.Workbook(filename);
+   workbook.Save(xlspath);
+  }
+
   public string TextFromPage(string _filePath, int startPage, int endPage)
   {
    var pdfReader = new PdfReader(_filePath);

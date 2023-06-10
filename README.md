@@ -60,3 +60,12 @@ arrayRet = JSON.Parse(UiBotCommonPlugin.ExcelReadRow("D:\\2203252139.xls","Sheet
 
 17 OCR 參數是 來源圖片，domain (來自於 https://iot.jtmes.net/domain 斜線後面的文字)，ApiKey 由  https://iot.jtmes.net/ 註冊登入產生
 arrayRet = JSON.Parse(UiBotCommonPlugin.OCR("D:\\2203252139.jpg", "ebc", ApiKey))
+
+18 doc to docx
+UiBotCommonPlugin.DocToDocx(string source, string xlspath)
+
+19 ppt to pptx
+UiBotCommonPlugin.PptToPptx(string source, string xlspath)
+
+20 xls to xlsx
+UiBotCommonPlugin.XlsToXlsx(string source, string xlspath)
