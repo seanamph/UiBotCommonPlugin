@@ -86,3 +86,6 @@ UiBotCommonPlugin.PptToPptx(string source, string xlspath)
 
 20 xls to xlsx
 UiBotCommonPlugin.XlsToXlsx(string source, string xlspath)
+
+21 chatGPT
+UiBotCommonPlugin.chatGPT(string apiKey, string ask)

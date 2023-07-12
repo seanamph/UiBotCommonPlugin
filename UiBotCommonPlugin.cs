@@ -21,6 +21,12 @@ using NPOI.Util;
 using NPOI.HSSF.Record;
 using NPOI.HSSF.Model;
 using System.Reflection;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using iTextSharp.xmp.options;
+using System.Text.Json;
+using System.Threading.Tasks;
+using NPOI.POIFS.Crypt;
 
 //建议把下面的namespace名字改为您的插件名字
 namespace UiBotCommonPlugin
@@ -59,7 +65,7 @@ namespace UiBotCommonPlugin
   string ExcelReadRange(string target, string SheetName, string range);
   string OCR(string target, string domain, string key);
 
-  
+  string chatGPT(string apiKey, string ask);
  }
 
  public class Plugin_Implement : Plugin_Interface
@@ -713,6 +719,52 @@ namespace UiBotCommonPlugin
    img.Dispose();
    return size;
   }
+
+  public string chatGPT(string apiKey, string ask)
+  {
+   ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+   ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+   if (string.IsNullOrWhiteSpace(ask)) return null;
+   string url = "https://api.openai.com/v1/chat/completions";
+
+   ask = ask.Replace("\t", "\\t").Replace("\r", "").Replace("\n", "\\n");
+
+   
+   using (WebClient client = new WebClient())
+   {
+    client.Headers["Authorization"] = "Bearer " + apiKey;
+    client.Headers["Content-Type"] = "application/json";
+    client.Encoding = Encoding.UTF8;
+    try
+    {
+     var responseContent = client.UploadString(url, "POST", @"{
+                ""model"": ""gpt-4"",
+                ""messages"": [{""role"": ""user"", ""content"": """ + ask + @"""}]
+            }");
+     return JsonDeserialize(responseContent).choices[0].message.content;
+    }
+    catch
+    {
+     return @"{
+                ""model"": ""gpt-4"",
+                ""messages"": [{""role"": ""user"", ""content"": """ + ask + @"""}]
+            }";
+    }
+   }
+
+  }
+
+  public JsonSerializerOptions serializerOptions = new JsonSerializerOptions
+  {
+   Converters = { new DynamicJsonConverter() }
+  };
+
+  protected dynamic JsonDeserialize(string str)
+  {
+   return System.Text.Json.JsonSerializer.Deserialize<dynamic>(str, serializerOptions);
+  }
+
   public class TextWithFontExtractionStategy : iTextSharp.text.pdf.parser.ITextExtractionStrategy
   {
    //HTML buffer
