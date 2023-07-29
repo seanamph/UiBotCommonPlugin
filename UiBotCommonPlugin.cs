@@ -404,7 +404,6 @@ namespace UiBotCommonPlugin
    {
     using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
     {
-
      if (target.EndsWith(".xls", StringComparison.InvariantCultureIgnoreCase))
      {
       HSSFWorkbook workbook = new HSSFWorkbook(file);
@@ -416,17 +415,35 @@ namespace UiBotCommonPlugin
        NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(s);
        string SheetName = workbook.GetSheetAt(s).SheetName;
        List<List<object>> t = new List<List<object>>();
+       List<List<object>> er = new List<List<object>>();
        for (int i = 0; i < sheet.LastRowNum + 1; i++)
        {
-        NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
         List<object> r = new List<object>();
-        for (int j = 0; j < Row.LastCellNum + 1; j++)
+        List<object> ei = new List<object>();
+        try
         {
-         r.Add(getCellValue(Row.GetCell(j)));
+         NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
+         for (int j = 0; j < Row.LastCellNum + 1; j++)
+         {
+          try
+          {
+           r.Add(getCellValue(Row.GetCell(j)));
+          }
+          catch (Exception e1)
+          {
+           ei.Add("GetCell" + i + "," + j + "error:" + e1.Message);
+          }
+         }
+        }
+        catch (Exception e)
+        {
+         ei.Add("row" + i + "error:" + e.Message);
         }
         t.Add(r);
+        er.Add(ei);
        }
        d[SheetName] = t;
+       d["error-" + SheetName] = er;
       }
       return JsonConvert.SerializeObject(d);
      }
@@ -442,17 +459,35 @@ namespace UiBotCommonPlugin
        NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(s);
        string SheetName = workbook.GetSheetAt(s).SheetName;
        List<List<object>> t = new List<List<object>>();
+       List<List<object>> er = new List<List<object>>();
        for (int i = 0; i < sheet.LastRowNum + 1; i++)
        {
-        NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
         List<object> r = new List<object>();
-        for (int j = 0; j < Row.LastCellNum + 1; j++)
+        List<object> ei = new List<object>();
+        try
         {
-         r.Add(getCellValue(Row.GetCell(j)));
+         NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
+         for (int j = 0; j < Row.LastCellNum + 1; j++)
+         {
+          try
+          {
+           r.Add(getCellValue(Row.GetCell(j)));
+          }
+          catch (Exception e1)
+          {
+           ei.Add("GetCell" + i + "," + j + "error:" + e1.Message);
+          }
+         }
+         t.Add(r);
+         er.Add(ei);
         }
-        t.Add(r);
+        catch (Exception e)
+        {
+         ei.Add("row" + i + "error:" + e.Message);
+        }
        }
        d[SheetName] = t;
+       d["error-" + SheetName] = er;
       }
       return JsonConvert.SerializeObject(d);
      }
