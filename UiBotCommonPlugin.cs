@@ -33,9 +33,13 @@ namespace UiBotCommonPlugin
 
   void PdfExtractPages(string sourcePDFpath, string outputPDFpath, int startpage, int endpage);
   void PdfToXls(string source, string xlspath);
+  void PdfToTxt(string source, string txtpath);
   void DocToDocx(string source, string xlspath);
+  void DocToTxt(string source, string txtpath); 
   void PptToPptx(string source, string xlspath);
+  void PptToTxt(string source, string txtpath); 
   void XlsToXlsx(string source, string xlspath);
+  void XlsToTxt(string source, string txtpath);
 
   string TextFromPage(string _filePath, int startPage, int endPage);
   void GrayScaleImage(string filepath);
@@ -608,6 +612,22 @@ namespace UiBotCommonPlugin
    Spire.Pdf.PdfDocument doc = new Spire.Pdf.PdfDocument(filename);
    doc.SaveToFile(xlspath, Spire.Pdf.FileFormat.XLSX);
   }
+  public void PdfToTxt(string filename, string txtpath)
+  {
+
+   using (PdfReader pdfReader = new PdfReader(filename))
+   {
+    using (StreamWriter writer = new StreamWriter(txtpath))
+    {
+     for (int page = 1; page <= pdfReader.NumberOfPages; page++)
+     {
+      ITextExtractionStrategy strategy = new SimpleTextExtractionStrategy();
+      string text = PdfTextExtractor.GetTextFromPage(pdfReader, page, strategy);
+      writer.WriteLine(text);
+     }
+    }
+   }
+  }
 
 
   public void DocToDocx(string filename, string xlspath)
@@ -616,6 +636,16 @@ namespace UiBotCommonPlugin
    wordDocument.Save(xlspath, Aspose.Words.SaveFormat.Docx);
   }
 
+
+  public void DocToTxt(string filename, string txtpath)
+  {
+   Aspose.Words.Document wordDocument = new Aspose.Words.Document(filename);
+   // Extract text from the entire document
+   string textContent = wordDocument.GetText();
+
+   // Save the extracted text to a text file
+   System.IO.File.WriteAllText(txtpath, textContent);
+  }
   public void PptToPptx(string filename, string xlspath)
   {
    // Instantiate a Presentation object that represents a PPTX file
@@ -625,10 +655,45 @@ namespace UiBotCommonPlugin
    pres.Save(xlspath, Aspose.Slides.Export.SaveFormat.Pptx);
   }
 
+  public void PptToTxt(string filename, string txtpath)
+  {
+   string textContent = "";
+   // Instantiate a Presentation object that represents a PPTX file
+   Aspose.Slides.Presentation pres = new Aspose.Slides.Presentation(filename);
+
+   foreach (Aspose.Slides.ISlide slide in pres.Slides)
+   {
+    foreach (Aspose.Slides.IShape shape in slide.Shapes)
+    {
+     if (shape is Aspose.Slides.ITextFrame textFrame)
+     {
+      foreach (Aspose.Slides.IParagraph paragraph in textFrame.Paragraphs)
+      {
+       foreach (Aspose.Slides.IPortion portion in paragraph.Portions)
+       {
+        textContent += portion.Text + "\r\n";
+       }
+      }
+     }
+    }
+   }
+
+   // Save the extracted text to a text file
+   System.IO.File.WriteAllText(txtpath, textContent);
+  }
+
   public void XlsToXlsx(string filename, string xlspath)
   {
    var workbook = new Aspose.Cells.Workbook(filename);
    workbook.Save(xlspath);
+  }
+
+  public void XlsToTxt(string filename, string txtpath)
+  {
+   var workbook = new Aspose.Cells.Workbook(filename);
+   Aspose.Cells.TxtSaveOptions saveOptions = new Aspose.Cells.TxtSaveOptions();
+   saveOptions.Separator = '\t'; // You can change the separator as needed
+   workbook.Save(txtpath, saveOptions);
   }
 
   public string TextFromPage(string _filePath, int startPage, int endPage)

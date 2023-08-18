@@ -86,3 +86,15 @@ UiBotCommonPlugin.PptToPptx(string source, string xlspath)
 
 20 xls to xlsx
 UiBotCommonPlugin.XlsToXlsx(string source, string xlspath)
+
+21 doc to txt
+UiBotCommonPlugin.DocToTxt(string source, string xlspath)
+
+22 ppt to txt
+UiBotCommonPlugin.PptToTxt(string source, string xlspath)
+
+23 xls to txt
+UiBotCommonPlugin.XlsToTxt(string source, string xlspath)
+
+24 pdf to txt
+UiBotCommonPlugin.PdfToTxt(string source, string xlspath)
