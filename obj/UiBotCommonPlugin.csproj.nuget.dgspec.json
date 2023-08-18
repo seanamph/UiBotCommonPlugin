@@ -1,21 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GitHub\\UiBotCommonPlugin\\UiBotCommonPlugin.csproj": {}
+    "D:\\GitHub\\jteprpa\\UiBotCommonPlugin\\UiBotCommonPlugin.csproj": {}
   },
   "projects": {
-    "D:\\GitHub\\UiBotCommonPlugin\\UiBotCommonPlugin.csproj": {
+    "D:\\GitHub\\jteprpa\\UiBotCommonPlugin\\UiBotCommonPlugin.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\UiBotCommonPlugin\\UiBotCommonPlugin.csproj",
+        "projectUniqueName": "D:\\GitHub\\jteprpa\\UiBotCommonPlugin\\UiBotCommonPlugin.csproj",
         "projectName": "UiBotCommonPlugin",
-        "projectPath": "D:\\GitHub\\UiBotCommonPlugin\\UiBotCommonPlugin.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub\\UiBotCommonPlugin\\obj\\",
+        "projectPath": "D:\\GitHub\\jteprpa\\UiBotCommonPlugin\\UiBotCommonPlugin.csproj",
+        "packagesPath": "C:\\Users\\Sean\\.nuget\\packages\\",
+        "outputPath": "D:\\GitHub\\jteprpa\\UiBotCommonPlugin\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Sean\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

@@ -98,3 +98,5 @@ UiBotCommonPlugin.XlsToTxt(string source, string xlspath)
 
 24 pdf to txt
 UiBotCommonPlugin.PdfToTxt(string source, string xlspath)
+
+25 chatGPT UiBotCommonPlugin.chatGPT(string apiKey, string ask)
