@@ -21,6 +21,12 @@ using NPOI.Util;
 using NPOI.HSSF.Record;
 using NPOI.HSSF.Model;
 using System.Reflection;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using iTextSharp.xmp.options;
+using System.Text.Json;
+using System.Threading.Tasks;
+using NPOI.POIFS.Crypt;
 
 //建议把下面的namespace名字改为您的插件名字
 namespace UiBotCommonPlugin
@@ -63,7 +69,7 @@ namespace UiBotCommonPlugin
   string ExcelReadRange(string target, string SheetName, string range);
   string OCR(string target, string domain, string key);
 
-  
+  string chatGPT(string apiKey, string ask);
  }
 
  public class Plugin_Implement : Plugin_Interface
@@ -402,7 +408,6 @@ namespace UiBotCommonPlugin
    {
     using (FileStream file = new FileStream(target, FileMode.Open, FileAccess.Read))
     {
-
      if (target.EndsWith(".xls", StringComparison.InvariantCultureIgnoreCase))
      {
       HSSFWorkbook workbook = new HSSFWorkbook(file);
@@ -414,17 +419,35 @@ namespace UiBotCommonPlugin
        NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(s);
        string SheetName = workbook.GetSheetAt(s).SheetName;
        List<List<object>> t = new List<List<object>>();
+       List<List<object>> er = new List<List<object>>();
        for (int i = 0; i < sheet.LastRowNum + 1; i++)
        {
-        NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
         List<object> r = new List<object>();
-        for (int j = 0; j < Row.LastCellNum + 1; j++)
+        List<object> ei = new List<object>();
+        try
         {
-         r.Add(getCellValue(Row.GetCell(j)));
+         NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
+         for (int j = 0; j < Row.LastCellNum + 1; j++)
+         {
+          try
+          {
+           r.Add(getCellValue(Row.GetCell(j)));
+          }
+          catch (Exception e1)
+          {
+           ei.Add("GetCell" + i + "," + j + "error:" + e1.Message);
+          }
+         }
+        }
+        catch (Exception e)
+        {
+         ei.Add("row" + i + "error:" + e.Message);
         }
         t.Add(r);
+        er.Add(ei);
        }
        d[SheetName] = t;
+       d["error-" + SheetName] = er;
       }
       return JsonConvert.SerializeObject(d);
      }
@@ -440,17 +463,35 @@ namespace UiBotCommonPlugin
        NPOI.SS.UserModel.ISheet sheet = workbook.GetSheetAt(s);
        string SheetName = workbook.GetSheetAt(s).SheetName;
        List<List<object>> t = new List<List<object>>();
+       List<List<object>> er = new List<List<object>>();
        for (int i = 0; i < sheet.LastRowNum + 1; i++)
        {
-        NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
         List<object> r = new List<object>();
-        for (int j = 0; j < Row.LastCellNum + 1; j++)
+        List<object> ei = new List<object>();
+        try
         {
-         r.Add(getCellValue(Row.GetCell(j)));
+         NPOI.SS.UserModel.IRow Row = sheet.GetRow(i);
+         for (int j = 0; j < Row.LastCellNum + 1; j++)
+         {
+          try
+          {
+           r.Add(getCellValue(Row.GetCell(j)));
+          }
+          catch (Exception e1)
+          {
+           ei.Add("GetCell" + i + "," + j + "error:" + e1.Message);
+          }
+         }
+         t.Add(r);
+         er.Add(ei);
         }
-        t.Add(r);
+        catch (Exception e)
+        {
+         ei.Add("row" + i + "error:" + e.Message);
+        }
        }
        d[SheetName] = t;
+       d["error-" + SheetName] = er;
       }
       return JsonConvert.SerializeObject(d);
      }
@@ -778,6 +819,52 @@ namespace UiBotCommonPlugin
    img.Dispose();
    return size;
   }
+
+  public string chatGPT(string apiKey, string ask)
+  {
+   ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+   ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+   if (string.IsNullOrWhiteSpace(ask)) return null;
+   string url = "https://api.openai.com/v1/chat/completions";
+
+   ask = ask.Replace("\t", "\\t").Replace("\r", "").Replace("\n", "\\n");
+
+   
+   using (WebClient client = new WebClient())
+   {
+    client.Headers["Authorization"] = "Bearer " + apiKey;
+    client.Headers["Content-Type"] = "application/json";
+    client.Encoding = Encoding.UTF8;
+    try
+    {
+     var responseContent = client.UploadString(url, "POST", @"{
+                ""model"": ""gpt-4"",
+                ""messages"": [{""role"": ""user"", ""content"": """ + ask + @"""}]
+            }");
+     return JsonDeserialize(responseContent).choices[0].message.content;
+    }
+    catch
+    {
+     return @"{
+                ""model"": ""gpt-4"",
+                ""messages"": [{""role"": ""user"", ""content"": """ + ask + @"""}]
+            }";
+    }
+   }
+
+  }
+
+  public JsonSerializerOptions serializerOptions = new JsonSerializerOptions
+  {
+   Converters = { new DynamicJsonConverter() }
+  };
+
+  protected dynamic JsonDeserialize(string str)
+  {
+   return System.Text.Json.JsonSerializer.Deserialize<dynamic>(str, serializerOptions);
+  }
+
   public class TextWithFontExtractionStategy : iTextSharp.text.pdf.parser.ITextExtractionStrategy
   {
    //HTML buffer
