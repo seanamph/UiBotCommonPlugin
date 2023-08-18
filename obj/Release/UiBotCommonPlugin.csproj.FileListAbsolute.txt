@@ -80,3 +80,7 @@ D:\GitHub\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.csproj.CoreCompileInpu
 D:\GitHub\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.csproj.CopyComplete
 D:\GitHub\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.dll
 D:\GitHub\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.pdb
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\Microsoft.Bcl.AsyncInterfaces.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\System.Text.Encodings.Web.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\System.Text.Json.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\System.Threading.Tasks.Extensions.dll
