@@ -27,6 +27,8 @@ using iTextSharp.xmp.options;
 using System.Text.Json;
 using System.Threading.Tasks;
 using NPOI.POIFS.Crypt;
+using Aspose.Words.Saving;
+using Spire.Pdf.Graphics;
 
 //建议把下面的namespace名字改为您的插件名字
 namespace UiBotCommonPlugin
@@ -39,6 +41,8 @@ namespace UiBotCommonPlugin
 
   void PdfExtractPages(string sourcePDFpath, string outputPDFpath, int startpage, int endpage);
   void PdfToXls(string source, string xlspath);
+  void PdfToXls1(string source, string xlspath);
+  void PdfToJpg(string source, string jpgpath);
   void PdfToTxt(string source, string txtpath);
   void DocToDocx(string source, string xlspath);
   void DocToTxt(string source, string txtpath); 
@@ -652,6 +656,23 @@ namespace UiBotCommonPlugin
   {
    Spire.Pdf.PdfDocument doc = new Spire.Pdf.PdfDocument(filename);
    doc.SaveToFile(xlspath, Spire.Pdf.FileFormat.XLSX);
+  }
+  public void PdfToXls1(string filename, string xlspath)
+  {
+   var doc = new Aspose.Words.Document(filename);
+   XlsxSaveOptions saveOptions = new XlsxSaveOptions();
+   saveOptions.CompressionLevel = CompressionLevel.Maximum;
+   doc.Save(xlspath, saveOptions);
+  }
+  public void PdfToJpg(string filename, string jpgpath)
+  {
+   var doc = new Aspose.Words.Document(filename);
+
+   for (int page = 0; page < doc.PageCount; page++)
+   {
+    var extractedPage = doc.ExtractPages(page, 1);
+    extractedPage.Save($"{jpgpath}/{page + 1}.jpg");
+   }
   }
   public void PdfToTxt(string filename, string txtpath)
   {

@@ -37,6 +37,10 @@ D:\GitHub\jteprpa\UiBotCommonPlugin\Release\Aspose.Cells.dll
 D:\GitHub\jteprpa\UiBotCommonPlugin\Release\Aspose.Slides.dll
 D:\GitHub\jteprpa\UiBotCommonPlugin\Release\Aspose.Words.Pdf2Word.dll
 D:\GitHub\jteprpa\UiBotCommonPlugin\Release\Aspose.Words.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\Microsoft.Bcl.AsyncInterfaces.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\System.Text.Encodings.Web.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\System.Text.Json.dll
+D:\GitHub\jteprpa\UiBotCommonPlugin\Release\System.Threading.Tasks.Extensions.dll
 D:\GitHub\UiBotCommonPlugin\Release\UiBotCommonPlugin.dll
 D:\GitHub\UiBotCommonPlugin\Release\UiBotCommonPlugin.pdb
 D:\GitHub\UiBotCommonPlugin\Release\Aspose.Cells.dll
@@ -80,7 +84,3 @@ D:\GitHub\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.csproj.CoreCompileInpu
 D:\GitHub\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.csproj.CopyComplete
 D:\GitHub\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.dll
 D:\GitHub\UiBotCommonPlugin\obj\Release\UiBotCommonPlugin.pdb
-D:\GitHub\jteprpa\UiBotCommonPlugin\Release\Microsoft.Bcl.AsyncInterfaces.dll
-D:\GitHub\jteprpa\UiBotCommonPlugin\Release\System.Text.Encodings.Web.dll
-D:\GitHub\jteprpa\UiBotCommonPlugin\Release\System.Text.Json.dll
-D:\GitHub\jteprpa\UiBotCommonPlugin\Release\System.Threading.Tasks.Extensions.dll
