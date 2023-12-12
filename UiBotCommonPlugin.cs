@@ -548,6 +548,65 @@ namespace UiBotCommonPlugin
    stream.Close();
   }
 
+  public async Task<string> GoogleOCRAsync(string target, string apikey)
+  {
+
+   try
+   {
+    if (File.Exists(target))
+    {
+     try
+     {
+      using (System.Drawing.Image img = System.Drawing.Image.FromFile(target))
+      {
+       using (MemoryStream stream = new MemoryStream())
+       {
+        img.Save(stream, ImageFormat.Jpeg);
+        using (WebClient client = new WebClient())
+        {
+         string base64Data = UrlEncode("data:image/jpeg;base64," + Convert.ToBase64String(stream.ToArray()));
+         string myJson = $@"{{
+                    ""requests"":[
+                        {{
+                            ""image"":{{
+                                ""content"": ""{base64Data}""
+                            }},
+                            ""features"":[
+                                {{
+                                    ""type"": ""TEXT_DETECTION""
+                                }}
+                            ],
+                            ""imageContext"": {{
+                                ""languageHints"": [
+                                  ""en"",""zh-Hant-HK""
+                                ]
+                            }}
+                        }}
+                    ]
+                }}";
+
+         string requestUri = "https://vision.googleapis.com/v1/images:annotate?key=" + apikey;
+         client.Headers["Content-Type"] = "application/json";
+         var rawResponse = client.UploadString(requestUri, "POST", myJson);
+      
+         return rawResponse;
+        }
+       }
+      }
+     }
+     catch (Exception e)
+     {
+
+      return JsonConvert.SerializeObject(new { error = "Bad Image", msg = e.Message });
+     }
+    }
+    return JsonConvert.SerializeObject(new { error = "File Not Found" });
+   }
+   catch (Exception ex)
+   {
+    return JsonConvert.SerializeObject(new { error = ex.Message });
+   }
+  }
 
   public string OCR(string target, string domain, string apikey) {
 
