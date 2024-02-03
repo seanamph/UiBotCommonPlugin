@@ -71,6 +71,7 @@ namespace UiBotCommonPlugin
   string ExcelReadAllData(string target);
 
   string ExcelReadRange(string target, string SheetName, string range);
+  string GoogleOCR(string target, string apikey);
   string OCR(string target, string domain, string key);
 
   string chatGPT(string apiKey, string ask);
@@ -548,7 +549,7 @@ namespace UiBotCommonPlugin
    stream.Close();
   }
 
-  public async Task<string> GoogleOCRAsync(string target, string apikey)
+  public string GoogleOCR(string target, string apikey)
   {
 
    try
@@ -564,7 +565,7 @@ namespace UiBotCommonPlugin
         img.Save(stream, ImageFormat.Jpeg);
         using (WebClient client = new WebClient())
         {
-         string base64Data = UrlEncode("data:image/jpeg;base64," + Convert.ToBase64String(stream.ToArray()));
+         string base64Data = Convert.ToBase64String(stream.ToArray());
          string myJson = $@"{{
                     ""requests"":[
                         {{
@@ -587,6 +588,7 @@ namespace UiBotCommonPlugin
 
          string requestUri = "https://vision.googleapis.com/v1/images:annotate?key=" + apikey;
          client.Headers["Content-Type"] = "application/json";
+         client.Encoding = Encoding.UTF8; 
          var rawResponse = client.UploadString(requestUri, "POST", myJson);
       
          return rawResponse;
